@@ -1,30 +1,23 @@
-import static java.lang.Math.abs;
-
-
 public class Queen extends Piece {
 	
 	
 
-	public Queen(int color) {
-		super(color);
-		this.type = "Queen";
-		// TODO Auto-generated constructor stub
+	public Queen(int player) {
+		super(player);
+		this.type = "QUEEN";
 	}
 
 	@Override
-	public boolean isLegalMove(int cur_x, int cur_y, int dest_x, int dest_y) {
-		int x_distance = abs(cur_x - dest_x);
-		int y_distance = abs(cur_y - dest_y);
-		
-		
-		if(x_distance * y_distance == 1 || x_distance + y_distance == 1 ){
-			return true;
-		}
-		else{
+	public boolean isLegalMove(int cur_x, int cur_y, int dest_x, int dest_y, Board board) {
+		if(!passesUniversalConstraints(cur_x, cur_y, dest_x, dest_y, board)){
 			return false;
 		}
 		
-		// TODO Auto-generated method stub
+		if(Move.isDiagonal(cur_x, cur_y, dest_x, dest_y)||
+		   Move.isStraight(cur_x, cur_y, dest_x, dest_y)){
+			return true;
+		}
+		
 		return false;
 	}
 

@@ -1,20 +1,29 @@
 
 public class Square {
-	public boolean occupied;
-	public boolean playable;
+	private boolean playable;
+	private Piece piece;
 	
-	public boolean isOccupied() {
-		return occupied;
+	public Square(boolean playable){
+		this.playable = playable;
+		this.piece = null;
 	}
-	public void setOccupied(boolean occupied) {
-		this.occupied = occupied;
+	
+	public Piece getPiece() {
+		return piece;
 	}
+
+	public void setPiece(Piece piece) {
+		this.piece = piece;
+	}
+
 	public boolean isPlayable() {
 		return playable;
 	}
 	public void setPlayable(boolean playable) {
 		this.playable = playable;
 	}
-	
-	
+
+	public boolean isOccupied() {
+		return piece != null;
+	}
 }
