@@ -122,10 +122,10 @@ public class Board {
 		return true;
 	}
 
-	//returns 1 if checkmate, 0 if no checkmate, and -1 if stalemate
-	public boolean inCheckmate(int cur_color){
-		if(!inCheck(cur_color)) return false;
-		ArrayList<Integer> king_coord = findKing(cur_color);
+	//returns 1 if checkmate, 0 if no checkmate
+	public boolean inCheckmate(int cur_player){
+		if(!inCheck(cur_player)) return false;
+		ArrayList<Integer> king_coord = findKing(cur_player);
 		int cur_x = king_coord.get(0), cur_y = king_coord.get(1);
 		King king = (King) getPieceAt(cur_x, cur_y);
 
@@ -136,11 +136,34 @@ public class Board {
 				}
 			}
 		}
+		
+		//check if moving other pieces can get out of check
 		return true;
+		//return !hasAtLeastOneMove(cur_player);
+	}
+
+	private boolean hasAtLeastOneMove(int cur_player) {
+		for(int i = 0; i<width; i++){
+			for(int j = 0; j<height; j++){
+				Piece cur_piece = getPieceAt(i,j);
+				if(cur_piece != null && cur_piece.player == cur_player){
+					for(int m = 0; i<width; m++){
+						for(int n = 0; j<height; n++){
+							if(cur_piece.isLegalMove(i, j, m, n, this) && !putsSelfInCheck(i, j, m, n)){
+								return true;
+							}
+						}
+					}
+				}
+			}
+		}
+		return false;
 	}
 	
 	public boolean inStalemate(int cur_player){
-		//not yet implemented
-		return true;
+		if(inCheck(cur_player)){
+			return false;
+		}
+		return !hasAtLeastOneMove(cur_player);
 	}
 }
