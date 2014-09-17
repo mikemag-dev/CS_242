@@ -1,58 +1,80 @@
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Pawn.
+ */
 public class Pawn extends Piece {
+	
+	/** The step size. */
 	int stepSize;
 	
+	/**
+	 * Instantiates a new pawn.
+	 *
+	 * @param player the player
+	 */
 	public Pawn(int player) {
 		super(player);
-		this.type = "PAWN";
 		this.stepSize = 2*player;	
 	}
 
-	public boolean canAttack(int cur_x, int cur_y, Board board, int direction){
-		int attackable_y_coord = (int) (cur_y + Math.signum(stepSize));
-		int attackable_x_coord = cur_x + direction;
-		if ((0 <= attackable_y_coord && attackable_y_coord < board.height) &&
-			(0 <= attackable_x_coord && attackable_x_coord < board.width)	){
-			Piece toAttack = board.getPieceAt(attackable_x_coord, attackable_y_coord);
+	/**
+	 * Can attack.
+	 *
+	 * @param curX the curX
+	 * @param curY the curY
+	 * @param board the board
+	 * @param direction the direction
+	 * @return true, if successful
+	 */
+	public boolean canAttack(int curX, int curY, Board board, int direction){
+		int attackbleYCoord = (int) (curY + Math.signum(stepSize));
+		int attackableXCoord = curX + direction;
+		if ((0 <= attackbleYCoord && attackbleYCoord < board.height) &&
+			(0 <= attackableXCoord && attackableXCoord < board.width)	){
+			Piece toAttack = board.getPieceAt(attackableXCoord, attackbleYCoord);
 			return null != toAttack && toAttack.player != this.player;
 		}
 		return false;
 	}
 	
+	/* (non-Javadoc)
+	 * @see Piece#isLegalMove(int, int, int, int, Board)
+	 */
 	@Override
-	public boolean isLegalMove(int cur_x, int cur_y, int dest_x, int dest_y, Board board) {
-		int one_step_forward_y_coord = (int) (cur_y + Math.signum(stepSize));
-		int one_step_left_x_coord = cur_x - 1;
-		int one_step_right_x_coord = cur_x + 1;
+	public boolean isLegalMove(int curX, int curY, int destX, int destY, Board board) {
+		int oneStepForwardYCoord = (int) (curY + Math.signum(stepSize));
+		int oneStepLeftXCoord = curX - 1;
+		int oneStepRightXCoord = curX + 1;
 		
 		//pawns cannot attack forward, only diagonal
-		if((board.getPieceAt(dest_x, dest_y) != null) && (cur_x == dest_x)){
+		if((board.getPieceAt(destX, destY) != null) && (curX == destX)){
 			return false;
 		}
 		
-		if(!passesUniversalConstraints(cur_x, cur_y, dest_x, dest_y, board)){
+		if(!passesStandardUniversalConstraints(curX, curY, destX, destY, board)){
 			return false;
 		}
 		
 		//left attack
-		if(canAttack(cur_x, cur_y, board, -1) && 
-			dest_x == one_step_left_x_coord && 
-			dest_y == one_step_forward_y_coord){
+		if(canAttack(curX, curY, board, -1) && 
+			destX == oneStepLeftXCoord && 
+			destY == oneStepForwardYCoord){
 			return true;
 		}
 		
 		//right attack
-		if(canAttack(cur_x, cur_y, board, 1) && 
-			dest_x == one_step_right_x_coord && 
-			dest_y == one_step_forward_y_coord){
+		if(canAttack(curX, curY, board, 1) && 
+			destX == oneStepRightXCoord && 
+			destY == oneStepForwardYCoord){
 				return true;
 		}	
 		
 		//already checked for attack cases
-		if(dest_x != cur_x){
+		if(destX != curX){
 			return false;
 		}
 		
-		if(dest_y - cur_y != stepSize && dest_y - cur_y != stepSize/2){
+		if(destY - curY != stepSize && destY - curY != stepSize/2){
 			return false;
 		}
 		

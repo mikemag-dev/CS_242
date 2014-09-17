@@ -1,3 +1,4 @@
+
 import static org.junit.Assert.*;
 
 import org.junit.Test;
@@ -10,41 +11,42 @@ public class BoardTest {
 	@Test
 	public void testConstructor() {
 		Board x = new Board(8, 8, false);
-		if(x == null) fail("NULL");
+		//if(x == null) fail("NULL");
 		
-		if(!x.getPieceAt(0, 0).type.equals("ROOK")) fail();
-		if(!x.getPieceAt(1, 0).type.equals("KNIGHT")) fail();
-		if(!x.getPieceAt(2, 0).type.equals("BISHOP")) fail();
-		if(!x.getPieceAt(3, 0).type.equals("QUEEN")) fail();
-		if(!x.getPieceAt(4, 0).type.equals("KING")) fail();
-		if(!x.getPieceAt(5, 0).type.equals("BISHOP")) fail();
-		if(!x.getPieceAt(6, 0).type.equals("KNIGHT")) fail();
-		if(!x.getPieceAt(7, 0).type.equals("ROOK")) fail();
-		if(!x.getPieceAt(0, 1).type.equals("PAWN")) fail();
-		if(!x.getPieceAt(1, 1).type.equals("PAWN")) fail();
-		if(!x.getPieceAt(2, 1).type.equals("PAWN")) fail();
-		if(!x.getPieceAt(3, 1).type.equals("PAWN")) fail();
-		if(!x.getPieceAt(4, 1).type.equals("PAWN")) fail();
-		if(!x.getPieceAt(5, 1).type.equals("PAWN")) fail();
-		if(!x.getPieceAt(6, 1).type.equals("PAWN")) fail();
-		if(!x.getPieceAt(7, 1).type.equals("PAWN")) fail();
+		                     
+		if(!(x.getPieceAt(0, 0) instanceof Rook)) fail();
+		if(!(x.getPieceAt(1, 0) instanceof Knight)) fail();
+		if(!(x.getPieceAt(2, 0) instanceof Bishop)) fail();
+		if(!(x.getPieceAt(3, 0) instanceof Queen)) fail();
+		if(!(x.getPieceAt(4, 0) instanceof King)) fail();
+		if(!(x.getPieceAt(5, 0) instanceof Bishop)) fail();
+		if(!(x.getPieceAt(6, 0) instanceof Knight)) fail();
+		if(!(x.getPieceAt(7, 0) instanceof Rook)) fail();
+		if(!(x.getPieceAt(0, 1) instanceof Pawn)) fail();
+		if(!(x.getPieceAt(1, 1) instanceof Pawn)) fail();
+		if(!(x.getPieceAt(2, 1) instanceof Pawn)) fail();
+		if(!(x.getPieceAt(3, 1) instanceof Pawn)) fail();
+		if(!(x.getPieceAt(4, 1) instanceof Pawn)) fail();
+		if(!(x.getPieceAt(5, 1) instanceof Pawn)) fail();
+		if(!(x.getPieceAt(6, 1) instanceof Pawn)) fail();
+		if(!(x.getPieceAt(7, 1) instanceof Pawn)) fail();
 
-		if(!x.getPieceAt(0, 7).type.equals("ROOK")) fail();
-		if(!x.getPieceAt(1, 7).type.equals("KNIGHT")) fail();
-		if(!x.getPieceAt(2, 7).type.equals("BISHOP")) fail();
-		if(!x.getPieceAt(3, 7).type.equals("QUEEN")) fail();
-		if(!x.getPieceAt(4, 7).type.equals("KING")) fail();
-		if(!x.getPieceAt(5, 7).type.equals("BISHOP")) fail();
-		if(!x.getPieceAt(6, 7).type.equals("KNIGHT")) fail();
-		if(!x.getPieceAt(7, 7).type.equals("ROOK")) fail();
-		if(!x.getPieceAt(0, 6).type.equals("PAWN")) fail();
-		if(!x.getPieceAt(1, 6).type.equals("PAWN")) fail();
-		if(!x.getPieceAt(2, 6).type.equals("PAWN")) fail();
-		if(!x.getPieceAt(3, 6).type.equals("PAWN")) fail();
-		if(!x.getPieceAt(4, 6).type.equals("PAWN")) fail();
-		if(!x.getPieceAt(5, 6).type.equals("PAWN")) fail();
-		if(!x.getPieceAt(6, 6).type.equals("PAWN")) fail();
-		if(!x.getPieceAt(7, 6).type.equals("PAWN")) fail();		
+		if(!(x.getPieceAt(0, 7) instanceof Rook)) fail();
+		if(!(x.getPieceAt(1, 7) instanceof Knight)) fail();
+		if(!(x.getPieceAt(2, 7) instanceof Bishop)) fail();
+		if(!(x.getPieceAt(3, 7) instanceof Queen)) fail();
+		if(!(x.getPieceAt(4, 7) instanceof King)) fail();
+		if(!(x.getPieceAt(5, 7) instanceof Bishop)) fail();
+		if(!(x.getPieceAt(6, 7) instanceof Knight)) fail();
+		if(!(x.getPieceAt(7, 7) instanceof Rook)) fail();
+		if(!(x.getPieceAt(0, 6) instanceof Pawn)) fail();
+		if(!(x.getPieceAt(1, 6) instanceof Pawn)) fail();
+		if(!(x.getPieceAt(2, 6) instanceof Pawn)) fail();
+		if(!(x.getPieceAt(3, 6) instanceof Pawn)) fail();
+		if(!(x.getPieceAt(4, 6) instanceof Pawn)) fail();
+		if(!(x.getPieceAt(5, 6) instanceof Pawn)) fail();
+		if(!(x.getPieceAt(6, 6) instanceof Pawn)) fail();
+		if(!(x.getPieceAt(7, 6) instanceof Pawn)) fail();		
 	}
 
 	@Test
@@ -151,11 +153,35 @@ public class BoardTest {
 	
 	@Test
 	public void testStalemate(){
+		Board board = new Board(8, 8, true);
+		board.setPieceAt(0, 0, new King(1));
+		board.setPieceAt(1, 7, new Queen(-1));
+		board.setPieceAt(7, 1, new Queen(-1));
+		if(!board.inStalemate(Board.WHITE)) fail();
 		
+		board = new Board(8, 8, true);
+		board.setPieceAt(0, 0, new King(1));
+		board.setPieceAt(2, 2, new Queen(-1));
+		board.setPieceAt(1, 1, new Queen(-1));
+		if(board.inStalemate(Board.WHITE)) fail();
+		
+		board = new Board(8, 8, true);
+		board.setPieceAt(0, 0, new King(Board.WHITE));
+		board.setPieceAt(0, 1, new Pawn(Board.WHITE));
+		board.setPieceAt(0, 2, new Pawn(Board.BLACK));
+		board.setPieceAt(1, 7, new Queen(Board.BLACK));
+		if(!board.inStalemate(Board.WHITE)) fail();
 	}
 	
 	@Test
 	public void putsSelfInCheck(){
+		Board board = new Board(8, 8, true);
+		board.setPieceAt(0, 1, new King(Board.WHITE));
+		board.setPieceAt(1, 1, new Pawn(Board.WHITE));
+		board.setPieceAt(2, 1, new Rook(Board.BLACK));
+		if(board.tryMove(1,1,1,2)){
+			fail();
+		}
 		
 	}
 	

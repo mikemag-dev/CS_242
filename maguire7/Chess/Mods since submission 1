@@ -1,0 +1,6 @@
+1. changed variables with underscores to camel case
+2. Tracking white and black kings rather than find king method
+		improves inCheck, inCheckmate, and inStalemate running times
+3. Add final static variables for White and Black
+4. Commented all the things
+5. 
