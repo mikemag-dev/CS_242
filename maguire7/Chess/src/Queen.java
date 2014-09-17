@@ -1,20 +1,31 @@
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Queen.
+ */
 public class Queen extends Piece {
 	
 	
 
+	/**
+	 * Instantiates a new queen.
+	 *
+	 * @param player the player
+	 */
 	public Queen(int player) {
 		super(player);
-		this.type = "QUEEN";
 	}
 
+	/* (non-Javadoc)
+	 * @see Piece#isLegalMove(int, int, int, int, Board)
+	 */
 	@Override
-	public boolean isLegalMove(int cur_x, int cur_y, int dest_x, int dest_y, Board board) {
-		if(!passesUniversalConstraints(cur_x, cur_y, dest_x, dest_y, board)){
+	public boolean isLegalMove(int curX, int curY, int destX, int destY, Board board) {
+		if(!passesStandardUniversalConstraints(curX, curY, destX, destY, board)){
 			return false;
 		}
 		
-		if(Move.isDiagonal(cur_x, cur_y, dest_x, dest_y)||
-		   Move.isStraight(cur_x, cur_y, dest_x, dest_y)){
+		if(Move.isDiagonal(curX, curY, destX, destY)||
+		   Move.isStraight(curX, curY, destX, destY)){
 			return true;
 		}
 		

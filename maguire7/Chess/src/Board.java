@@ -1,10 +1,36 @@
+import static java.lang.Math.abs;
+
 import java.util.ArrayList;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Board. 
+ */
 public class Board {
-	public int width, height;
+	
+	public static final int WHITE = 1;
+	public static final int BLACK = -1;
+	
+	/** The width. */
+	public int width;
+	
+	/** The height. */
+	public int height;
+	
+	/** The grid. */
 	public Square[][] grid;
+	
+	public ArrayList<Integer> whiteKingPos;
+	public ArrayList<Integer> blackKingPos;
 
-	public Board(int width, int height, boolean empty){
+	/**
+	 * Instantiates a new board.
+	 *
+	 * @param width the width
+	 * @param height the height
+	 * @param doNotPopulate whether or not to populate the board with standard 32 pieces
+	 */
+	public Board(int width, int height, boolean doNotPopulate){
 		this.width = width;
 		this.height = height;
 		this.grid = new Square[width][height];
@@ -13,61 +39,87 @@ public class Board {
 		for(int i = 0; i<width; i++){
 			for(int j = 0; j<height; j++){
 				this.grid[i][j] = new Square(true);
-				if(empty) continue;
+				if(doNotPopulate) continue;
 				
 				//pawn logic
-				if(j == 1) setPieceAt(i, j, new Pawn(1));
-				if(j == height-2) setPieceAt(i, j, new Pawn(-1));
+				if(j == 1) setPieceAt(i, j, new Pawn(WHITE));
+				if(j == height-2) setPieceAt(i, j, new Pawn(BLACK));
 				
 				//white piece logic
-				if((j == 0 && i == 0) || (j == 0 && i == width-1)) setPieceAt(i, j, new Rook(1));
-				if((j == 0 && i == 1) || (j == 0 && i == width-2)) setPieceAt(i, j, new Knight(1));
-				if((j == 0 && i == 2) || (j == 0 && i == width-3)) setPieceAt(i, j, new Bishop(1));
-				if(j == 0 && i == 3) setPieceAt(i, j, new Queen(1));
-				if(j == 0 && i == 4) setPieceAt(i, j, new King(1));
+				if((j == 0 && i == 0) || (j == 0 && i == width-1)) setPieceAt(i, j, new Rook(WHITE));
+				if((j == 0 && i == 1) || (j == 0 && i == width-2)) setPieceAt(i, j, new Knight(WHITE));
+				if((j == 0 && i == 2) || (j == 0 && i == width-3)) setPieceAt(i, j, new Bishop(WHITE));
+				if(j == 0 && i == 3) setPieceAt(i, j, new Queen(WHITE));
+				if(j == 0 && i == 4) setPieceAt(i, j, new King(WHITE));
+				
 				
 				//black piece logic
-				if((j == height-1 && i == 0) || (j == height-1 && i == width-1)) setPieceAt(i, j, new Rook(-1));
-				if((j == height-1 && i == 1) || (j == height-1 && i == width-2)) setPieceAt(i, j, new Knight(-1));
-				if((j == height-1 && i == 2) || (j == height-1 && i == width-3)) setPieceAt(i, j, new Bishop(-1));
-				if(j == height-1 && i == 3) setPieceAt(i, j, new Queen(-1));
-				if(j == height-1 && i == 4) setPieceAt(i, j, new King(-1));
+				if((j == height-1 && i == 0) || (j == height-1 && i == width-1)) setPieceAt(i, j, new Rook(BLACK));
+				if((j == height-1 && i == 1) || (j == height-1 && i == width-2)) setPieceAt(i, j, new Knight(BLACK));
+				if((j == height-1 && i == 2) || (j == height-1 && i == width-3)) setPieceAt(i, j, new Bishop(BLACK));
+				if(j == height-1 && i == 3) setPieceAt(i, j, new Queen(BLACK));
+				if(j == height-1 && i == 4)	setPieceAt(i, j, new King(BLACK));
+				
 			}
 		}
 	}
 	
+	/**
+	 * Gets the piece at given coordinates.
+	 *
+	 * @param x the x coordinate
+	 * @param y the y coordinate
+	 * @return the piece at given coordinates, null if no piece
+	 */
 	public Piece getPieceAt(int x, int y) {
 		return this.grid[x][y].getPiece();
 	}
 
+	/**
+	 * Sets the piece at given coordinates. Update's king position if piece being set is king.
+	 *
+	 * @param x the x coordinate
+	 * @param y the y coordinate
+	 * @param piece the piece to set at given coordinates
+	 */
 	public void setPieceAt(int x, int y, Piece piece) {
 		this.grid[x][y].setPiece(piece);
-	}
-
-	public ArrayList<Integer> findKing(int cur_player) {
-		for (int i = 0; i < this.width; i++) {
-			for (int j = 0; j < this.height; j++) {
-				Piece piece_at_idx = this.getPieceAt(i, j);
-				if (null != piece_at_idx && piece_at_idx.type.equals("KING")
-						&& piece_at_idx.player == cur_player) {
-					ArrayList<Integer> king_coord = new ArrayList<Integer>();
-					king_coord.add(i);
-					king_coord.add(j);
-					return king_coord;
+		if(piece instanceof King){
+			if (piece.player == WHITE){
+				if (whiteKingPos == null){
+					whiteKingPos = new ArrayList<Integer>();
+					whiteKingPos.add(-1);
+					whiteKingPos.add(-1);
 				}
+				whiteKingPos.set(0, x);
+				whiteKingPos.set(1, y);
+			}
+			else{
+				if (blackKingPos == null){
+					blackKingPos = new ArrayList<Integer>();
+					blackKingPos.add(-1);
+					blackKingPos.add(-1);
+				}
+				blackKingPos.set(0, x);
+				blackKingPos.set(1, y);
 			}
 		}
-		return null;
 	}
 	
-	public boolean inCheck(int cur_player) {
+	/**
+	 * Confirms or denies whether the passed player is in check.
+	 *
+	 * @param curPlayer the curPlayer
+	 * @return true, if passed player is in check
+	 */
+	public boolean inCheck(int curPlayer) {
 		
-		ArrayList<Integer> king_coord = this.findKing(cur_player);
-		if(king_coord == null) return false;
+		ArrayList<Integer> kingCoord = curPlayer == WHITE ? whiteKingPos : blackKingPos;
+		if(kingCoord == null) return false;
 		for(int i = 0; i<this.width; i++){
 			for(int j = 0; j<this.height; j++){
-				Piece piece_at_idx = this.getPieceAt(i, j);
-				if(null != piece_at_idx && piece_at_idx.player != cur_player && piece_at_idx.isLegalMove(i, j, king_coord.get(0), king_coord.get(1), this)){
+				Piece pieceAtIdx = this.getPieceAt(i, j);
+				if(null != pieceAtIdx && pieceAtIdx.player != curPlayer && pieceAtIdx.isLegalMove(i, j, kingCoord.get(0), kingCoord.get(1), this)){
 					return true;
 				}
 			}
@@ -75,45 +127,63 @@ public class Board {
 		return false;
 	}
 
-	public boolean putsSelfInCheck(int cur_x, int cur_y, int dest_x,
-			int dest_y) {
-		boolean puts_self_in_check = false;
-		int cur_player;
-		Piece cur_piece, dest_piece;
+	/**
+	 * Puts self in check.
+	 *
+	 * @param curX the curX
+	 * @param curY the curY
+	 * @param destX the destX
+	 * @param destY the destY
+	 * @return true, if submitted move creates a self check
+	 */
+	public boolean putsSelfInCheck(int curX, int curY, int destX,
+			int destY) {
+		boolean putsSelfInCheck = false;
+		int curPlayer;
+		Piece curPiece, pieceAtDest;
 
 		// move piece temporarily
-		cur_piece = this.getPieceAt(cur_x, cur_y);
-		this.setPieceAt(cur_x, cur_y, null);
-		dest_piece = this.getPieceAt(dest_x, dest_y);
-		this.setPieceAt(dest_x, dest_y, cur_piece);
+		curPiece = this.getPieceAt(curX, curY);
+		this.setPieceAt(curX, curY, null);
+		pieceAtDest = this.getPieceAt(destX, destY);
+		this.setPieceAt(destX, destY, curPiece);
 
-		cur_player = cur_piece.player;
+		curPlayer = curPiece.player;
 
-		if (inCheck(cur_player)) {
-			puts_self_in_check = true;
+		if (inCheck(curPlayer)) {
+			putsSelfInCheck = true;
 		}
 
-		setPieceAt(cur_x, cur_y, cur_piece);
-		setPieceAt(dest_x, dest_y, dest_piece);
-		return puts_self_in_check;
+		setPieceAt(curX, curY, curPiece);
+		setPieceAt(destX, destY, pieceAtDest);
+		return putsSelfInCheck;
 	}
 	
-	public boolean tryMove(int cur_x, int cur_y, int dest_x, int dest_y) {
+	/**
+	 * Tries move. Performs check to see if move is within piece's reachable positions and does not moving current player in check. 
+	 *
+	 * @param curX the curX
+	 * @param curY the curY
+	 * @param destX the destX
+	 * @param destY the destY
+	 * @return true, if move gets submitted
+	 */
+	public boolean tryMove(int curX, int curY, int destX, int destY) {
 
 		
-		Piece pieceToMove = getPieceAt(cur_x, cur_y);
+		Piece pieceToMove = getPieceAt(curX, curY);
 
-		if ((!pieceToMove.isLegalMove(cur_x, cur_y, dest_x, dest_y, this)) ||
-			(putsSelfInCheck(cur_x, cur_y, dest_y, dest_y))) {
+		if ((!pieceToMove.isLegalMove(curX, curY, destX, destY, this)) ||
+			(putsSelfInCheck(curX, curY, destY, destY))) {
 			return false;
 		}
 
-		this.grid[cur_x][cur_y].setPiece(null);
-		this.grid[dest_x][dest_y].setPiece(pieceToMove);
+		this.grid[curX][curY].setPiece(null);
+		this.grid[destX][destY].setPiece(pieceToMove);
 
 		if (!pieceToMove.hasMoved) {
 			pieceToMove.hasMoved = true;
-			if (pieceToMove.type.equals("PAWN")) {
+			if (pieceToMove instanceof Pawn) {
 				Pawn pieceAsPawn = (Pawn) pieceToMove;
 				pieceAsPawn.stepSize /= 2;
 			}
@@ -122,34 +192,44 @@ public class Board {
 		return true;
 	}
 
-	//returns 1 if checkmate, 0 if no checkmate
-	public boolean inCheckmate(int cur_player){
-		if(!inCheck(cur_player)) return false;
-		ArrayList<Integer> king_coord = findKing(cur_player);
-		int cur_x = king_coord.get(0), cur_y = king_coord.get(1);
-		King king = (King) getPieceAt(cur_x, cur_y);
+	/**
+	 * Whether or not current player is in checkmate.
+	 *
+	 * @param curPlayer the current player
+	 * @return true, if passed player is in checkmate
+	 */
+	public boolean inCheckmate(int curPlayer){
+		if(!inCheck(curPlayer)) return false;
+		ArrayList<Integer> kingCoord = curPlayer == WHITE ? whiteKingPos : blackKingPos;
+		int curX = kingCoord.get(0), curY = kingCoord.get(1);
+		King king = (King) getPieceAt(curX, curY);
 
+		//check if King has moves (for optimization)
 		for(int i = -1; i<= 1; i++){
 			for(int j = -1; j<= 1; j++){
-				if(king.isLegalMove(cur_x, cur_y, cur_x + i, cur_y + j, this) && !putsSelfInCheck(cur_x, cur_y, cur_x + i, cur_y + j)){
+				if(king.isLegalMove(curX, curY, curX + i, curY + j, this) && !putsSelfInCheck(curX, curY, curX + i, curY + j)){
 					return false;
 				}
 			}
 		}
 		
-		//check if moving other pieces can get out of check
-		return true;
-		//return !hasAtLeastOneMove(cur_player);
+		return !hasAtLeastOneMove(curPlayer);
 	}
 
-	private boolean hasAtLeastOneMove(int cur_player) {
+	/**
+	 * Checks for at least one move.
+	 *
+	 * @param curPlayer the curPlayer
+	 * @return true, if successful
+	 */
+	private boolean hasAtLeastOneMove(int curPlayer) {
 		for(int i = 0; i<width; i++){
 			for(int j = 0; j<height; j++){
-				Piece cur_piece = getPieceAt(i,j);
-				if(cur_piece != null && cur_piece.player == cur_player){
-					for(int m = 0; i<width; m++){
-						for(int n = 0; j<height; n++){
-							if(cur_piece.isLegalMove(i, j, m, n, this) && !putsSelfInCheck(i, j, m, n)){
+				Piece curPiece = getPieceAt(i,j);
+				if(curPiece != null && curPiece.player == curPlayer){
+					for(int m = 0; m<width; m++){
+						for(int n = 0; n<height; n++){
+							if(curPiece.isLegalMove(i, j, m, n, this) && !putsSelfInCheck(i, j, m, n)){
 								return true;
 							}
 						}
@@ -160,10 +240,27 @@ public class Board {
 		return false;
 	}
 	
-	public boolean inStalemate(int cur_player){
-		if(inCheck(cur_player)){
+	/**
+	 * Returns whether or not passed player is in stalemate.
+	 *
+	 * @param curPlayer the curPlayer
+	 * @return true, if successful
+	 */
+	public boolean inStalemate(int curPlayer){
+		if(inCheck(curPlayer)){
 			return false;
 		}
-		return !hasAtLeastOneMove(cur_player);
+		return !hasAtLeastOneMove(curPlayer);
+	}
+
+	boolean isOneSquareAway(int curX, int curY, int destX, int destY) {
+		int distanceX = abs(curX - destX);
+		int distanceY = abs(curY - destY);		
+		if(distanceX * distanceY == 1 || distanceX + distanceY == 1 ){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 }

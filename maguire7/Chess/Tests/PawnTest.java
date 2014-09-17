@@ -1,4 +1,5 @@
 
+
 import static org.junit.Assert.*;
 
 import org.junit.Test;
@@ -12,7 +13,7 @@ public class PawnTest {
 		if(!board.tryMove(0, 1, 0, 2)){
 			fail();
 		}
-		if(!board.tryMove(0, 7, 0, 6)){
+		if(!board.tryMove(0, 6, 0, 5)){
 			fail();
 		}
 	}

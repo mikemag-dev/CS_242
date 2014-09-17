@@ -1,32 +1,48 @@
+import javax.swing.*;
 
+/**
+ * The Class Chess.
+ */
 public class Chess {
-	Player[] players;
-	Board board;
-	Clock clock;
-	int cur_player;
 	
+	/** The board. */
+	Board board;
+	
+	/** The curPlayer. */
+	int curPlayer;
+	
+	/**
+	 * Instantiates a new chess.
+	 */
 	public Chess(){
-		Board board = new Board(8, 8, false);
-		int cur_player = 1;
+		boolean doNotPopulate = false;
+		Board board = new Board(8, 8, doNotPopulate);
+		int curPlayer = Board.WHITE;
 		
 	}
 	
-	public static void main(String args[]){
-		Chess chess_game = new Chess();
-		while((!chess_game.board.inCheckmate(chess_game.cur_player) && (!chess_game.board.inStalemate(chess_game.cur_player))) ){
-			while(true){
-				//get move
-				/*if(board.tryMove(cur_x, cur_y, dest_x, dest_y)){
-					break;
-				}*/
-				//chess_game.cur_player = (chess_game.curplayer+1)%2;
-			}
-		}
-		if(chess_game.board.inStalemate(chess_game.cur_player)){
-			System.out.print(String.format("Stalemate!"));	
-		}
-		else{
-			System.out.print(String.format("%s has won!", chess_game.cur_player == 1 ? "Black" : "White" ));		
-		}
+	private static void createAndShowChessboard(){
+		JFrame frame = new JFrame("HelloWorldSwing");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setTitle("Chess");
+        frame.setSize(500, 500);
+        JLabel label = new JLabel("Hello World");
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+        //frame.getContentPane().add(label);
+
+        //Display the window.
+        //frame.pack();
+        //frame.setVisible(true);
 	}
+	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
+	/*public static void main(String args[]){
+		Chess chessGame = new Chess();
+		createAndShowChessboard();
+	}*/
 }

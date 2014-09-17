@@ -1,28 +1,43 @@
 import static java.lang.Math.*;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Move.
+ */
 public class Move {
 	
 
-	public static boolean isZeroVector(int cur_x, int cur_y, int dest_x,
-			int dest_y) {
-		return ((cur_x != dest_x) || (cur_y != dest_y));
+	/**
+	 * Checks if is zero vector.
+	 *
+	 * @param curX the curX
+	 * @param curY the curY
+	 * @param destX the destX
+	 * @param destY the destY
+	 * @return true, if is zero vector
+	 */
+	public static boolean isZeroVector(int curX, int curY, int destX,
+			int destY) {
+		return ((curX != destX) || (curY != destY));
 	}
 	
 	/**
-	 * @param cur_x
-	 * @param cur_y
-	 * @param dest_x
-	 * @param dest_y
+	 * Checks if is diagonal.
+	 *
+	 * @param curX the curX
+	 * @param curY the curY
+	 * @param destX the destX
+	 * @param destY the destY
 	 * @return returns true if horizontal movement distance is equal to vertical movement distance and both are greater than 1
 	 */
-	public static boolean isDiagonal(int cur_x, int cur_y, int dest_x, int dest_y){
-		int x_distance = abs(cur_x - dest_x);
-		int y_distance = abs(cur_y - dest_y);
+	public static boolean isDiagonal(int curX, int curY, int destX, int destY){
+		int distanceInX = abs(curX - destX);
+		int distanceInY = abs(curY - destY);
 		
 		
 		
-		if (x_distance != 0 && y_distance != 0 && x_distance == y_distance){
+		if (distanceInX != 0 && distanceInY != 0 && distanceInX == distanceInY){
 			return true;
 		}
 		else return false;
@@ -30,26 +45,36 @@ public class Move {
 	
 	
 	/**
-	 * @param cur_x
-	 * @param cur_y
-	 * @param dest_x
-	 * @param dest_y
+	 * Checks if is straight.
+	 *
+	 * @param curX the curX
+	 * @param curY the curY
+	 * @param destX the destX
+	 * @param destY the destY
 	 * @return returns true if movement is only horizontal or vertical and the movement in the direction is greater than 0
 	 */
-	public static boolean isStraight(int cur_x, int cur_y, int dest_x, int dest_y){
-		int x_distance = abs(cur_x - dest_x);
-		int y_distance = abs(cur_y - dest_y);
+	public static boolean isStraight(int curX, int curY, int destX, int destY){
+		int distanceInX = abs(curX - destX);
+		int distanceInY = abs(curY - destY);
 		
 		
-		if (x_distance*y_distance == 0 && x_distance + y_distance != 0){
+		if (distanceInX*distanceInY == 0 && distanceInX + distanceInY != 0){
 			return true;
 		}
 		else return false;
 	}
 	
-	public static boolean isWithinBounds(int dest_x, int dest_y, Board board){
+	/**
+	 * Checks if is within bounds.
+	 *
+	 * @param destX the destX
+	 * @param destY the destY
+	 * @param board the board
+	 * @return true, if is within bounds
+	 */
+	public static boolean isWithinBounds(int destX, int destY, Board board){
 				
-		if(0 <= dest_x && dest_x < board.width && 0 <= dest_y && dest_y < board.height){
+		if(0 <= destX && destX < board.width && 0 <= destY && destY < board.height){
 			return true;
 		}
 		
@@ -58,45 +83,55 @@ public class Move {
 		}
 	}
 	
-	public static boolean isObstructed(int cur_x, int cur_y, int dest_x, int dest_y, Board board){
-		Piece cur_piece = board.getPieceAt(cur_x, cur_y);
-		Piece piece_at_dest = board.getPieceAt(dest_x, dest_y);
+	/**
+	 * Checks if is obstructed.
+	 *
+	 * @param curX the curX
+	 * @param curY the curY
+	 * @param destX the destX
+	 * @param destY the destY
+	 * @param board the board
+	 * @return true, if is obstructed
+	 */
+	public static boolean isObstructed(int curX, int curY, int destX, int destY, Board board){
+		Piece curPiece = board.getPieceAt(curX, curY);
+		Piece pieceAtDest = board.getPieceAt(destX, destY);
 
-		int leftmost_pos, rightmost_pos, topmost_pos, bottommost_pos;
-		leftmost_pos = min(cur_x, dest_x);
-		rightmost_pos = max(cur_x, dest_x);
-		bottommost_pos = min(cur_y, dest_y);
-		topmost_pos = max(cur_y, dest_y);
+		int leftmostPos, rightmostPos, topmostPos, bottommostPos;
+		leftmostPos = min(curX, destX);
+		rightmostPos = max(curX, destX);
+		bottommostPos = min(curY, destY);
+		topmostPos = max(curY, destY);
 		
 		//check if destination has a teammate already there
-		if( piece_at_dest!=null && piece_at_dest.player == cur_piece.player){
+		if( pieceAtDest!=null && pieceAtDest.player == curPiece.player){
 			return true;
 		}
 		
-		if(isDiagonal(cur_x, cur_y, dest_x, dest_y)){
-			int slope_sign = (int) Math.signum((dest_y - cur_y)/(dest_x - cur_x));
-			for(int i = 1; i<rightmost_pos - leftmost_pos; i++){
-				Piece piece_between_dest = board.getPieceAt(leftmost_pos + i, cur_x == leftmost_pos ? cur_y + i*slope_sign : dest_y + i*slope_sign);
-				if(piece_between_dest != null){
+		if(isDiagonal(curX, curY, destX, destY)){
+			int slopeSign = (int) Math.signum((destY - curY)/(destX - curX));
+			for(int i = 1; i<rightmostPos - leftmostPos; i++){
+				Piece pieceBetweenDest = board.getPieceAt(leftmostPos + i, curX == leftmostPos ? curY + i*slopeSign : destY + i*slopeSign);
+				if(pieceBetweenDest != null){
 					return true;
 				}
 			}
 		}
-		else if(isStraight(cur_x, cur_y, dest_x, dest_y)){
+		else if(isStraight(curX, curY, destX, destY)){
 			//is horizontal move
-			if(cur_x != dest_x){
-				for(int i = leftmost_pos+1; i<rightmost_pos; i++){
-					Piece piece_between_dest = board.getPieceAt(i, cur_y);
-					if(piece_between_dest != null){
+			if(curX != destX){
+				for(int i = leftmostPos+1; i<rightmostPos; i++){
+					Piece pieceBetweenDest = board.getPieceAt(i, curY);
+					if(pieceBetweenDest != null){
 						return true;
 					}
 				}
 			}
 			//is vertical move
-			else if(cur_y != dest_y){
-				for(int i = bottommost_pos+1; i<topmost_pos; i++){
-					Piece piece_between_dest = board.getPieceAt(cur_x, i);
-					if(piece_between_dest != null){
+			else if(curY != destY){
+				for(int i = bottommostPos+1; i<topmostPos; i++){
+					Piece pieceBetweenDest = board.getPieceAt(curX, i);
+					if(pieceBetweenDest != null){
 						return true;
 					}
 				}
@@ -105,23 +140,20 @@ public class Move {
 		return false;
 	}
 	
-	
-	
-	public static boolean passesUniversalConstraints(int cur_x, int cur_y, int dest_x, int dest_y, Board board) {
-		if(!Move.isWithinBounds(dest_x, dest_y, board)){
-			return false;
-		}		
-		if(Move.isZeroVector(cur_x, cur_y, dest_x, dest_y)){
-			return false;
-		}
-		return true;
-	}
-	
-	public static boolean isLShaped(int cur_x, int cur_y, int dest_x, int dest_y) {
-		int x_distance = abs(cur_x - dest_x);
-		int y_distance = abs(cur_y - dest_y);
+	/**
+	 * Checks if is l shaped.
+	 *
+	 * @param curX the curX
+	 * @param curY the curY
+	 * @param destX the destX
+	 * @param destY the destY
+	 * @return true, if is l shaped
+	 */
+	public static boolean isLShaped(int curX, int curY, int destX, int destY) {
+		int distanceInX = abs(curX - destX);
+		int distanceInY = abs(curY - destY);
 		
-		if (x_distance * y_distance == 2){
+		if (distanceInX * distanceInY == 2){
 			return true;
 		}
 		

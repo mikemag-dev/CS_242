@@ -1,28 +1,29 @@
-import static java.lang.Math.abs;
-
+// TODO: Auto-generated Javadoc
+/**
+ * The Class King.
+ */
 public class King extends Piece {
 
+	/**
+	 * Instantiates a new king.
+	 *
+	 * @param player the player
+	 */
 	public King(int player) {
 		super(player);
-		this.type = "KING";
 	}
 
 	
 	
+	/* (non-Javadoc)
+	 * @see Piece#isLegalMove(int, int, int, int, Board)
+	 */
 	@Override
-	public boolean isLegalMove(int cur_x, int cur_y, int dest_x, int dest_y, Board board) {
-		int x_distance = abs(cur_x - dest_x);
-		int y_distance = abs(cur_y - dest_y);
-		if(!passesUniversalConstraints(cur_x, cur_y, dest_x, dest_y, board)){
+	public boolean isLegalMove(int curX, int curY, int destX, int destY, Board board) {
+		if(!passesStandardUniversalConstraints(curX, curY, destX, destY, board)){
 			return false;
 		}
-		
-		if(x_distance * y_distance == 1 || x_distance + y_distance == 1 ){
-			return true;
-		}
-		else{
-			return false;
-		}
+		return board.isOneSquareAway(curX, curY, destX, destY);
 	}
 
 }
