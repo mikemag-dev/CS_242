@@ -1,5 +1,3 @@
-
-
 public class WannabeKing extends Piece {
 
 	public WannabeKing(int player) {
