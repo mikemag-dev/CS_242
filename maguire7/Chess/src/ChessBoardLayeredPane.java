@@ -11,11 +11,24 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ChessBoardLayeredPane.
+ */
 public class ChessBoardLayeredPane extends JPanel {
+	
+	/** The grid colors. */
 	private Color[] gridColors = { Color.LIGHT_GRAY, Color.WHITE};
 	
+	/** The layered pane. */
 	private JLayeredPane layeredPane;
 	
+	/**
+	 * Instantiates a new chess boardUI with pieces.
+	 *
+	 * @param width the width
+	 * @param height the height
+	 */
 	public ChessBoardLayeredPane(int width, int height){
 		setLayout(new GridLayout(width, height));
 		
@@ -46,14 +59,15 @@ public class ChessBoardLayeredPane extends JPanel {
 			}
 		}
 		
-		/*for (int i = 0; i < width*height; i++) {
-            JLabel label = createColoredLabel(gridColors[(i+i/8)%2]);
-            label.setIcon(new ImageIcon("res/black_bishop.png"));
-            add(label, new Integer(i));
-        }*/
 	}
 	
 	
+	/**
+	 * Creates the colored label.
+	 *
+	 * @param squareColor the square color
+	 * @return the j label
+	 */
 	private JLabel createColoredLabel(Color squareColor) {
 		JLabel label = new JLabel();
 		label.setVerticalAlignment(JLabel.TOP);
@@ -66,7 +80,10 @@ public class ChessBoardLayeredPane extends JPanel {
 		return label;
 	}
 	   
-	   private static void createAndShowGUI() {
+	   /**
+   	 * Creates the and show gui.
+   	 */
+   	private static void createAndShowGUI() {
 	        //Create and set up the window.
 	        JFrame frame = new JFrame("Chess");
 	        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -81,7 +98,12 @@ public class ChessBoardLayeredPane extends JPanel {
 	        frame.setVisible(true);
 	    }
 	   
-	   public static void main(String[] args) {
+	   /**
+   	 * The main method.
+   	 *
+   	 * @param args the arguments
+   	 */
+   	public static void main(String[] args) {
 	        //Schedule a job for the event-dispatching thread:
 	        //creating and showing this application's GUI.
 	        javax.swing.SwingUtilities.invokeLater(new Runnable() {
