@@ -1,3 +1,7 @@
+package edu.illinois.cs242.pieces;
+import edu.illinois.cs242.chess.Board;
+import edu.illinois.cs242.chess.Move;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class Queen.
@@ -11,8 +15,9 @@ public class Queen extends Piece {
 	 *
 	 * @param player the player
 	 */
-	public Queen(int player) {
-		super(player);
+	public Queen(int color) {
+		super(color);
+		pieceImageKey = color == Board.WHITE ? "res/white_queen.png" : "res/black_queen.png";
 	}
 
 	/* (non-Javadoc)

@@ -1,7 +1,11 @@
+package edu.illinois.cs242.pieces;
+
+import edu.illinois.cs242.chess.Board;
+
 public class WannabeKing extends Piece {
 
-	public WannabeKing(int player) {
-		super(player);
+	public WannabeKing(int color) {
+		super(color);
 	}
 
 	@Override

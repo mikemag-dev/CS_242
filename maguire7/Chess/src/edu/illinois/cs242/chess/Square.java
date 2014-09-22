@@ -1,3 +1,7 @@
+package edu.illinois.cs242.chess;
+
+import edu.illinois.cs242.pieces.Piece;
+
 
 // TODO: Auto-generated Javadoc
 /**

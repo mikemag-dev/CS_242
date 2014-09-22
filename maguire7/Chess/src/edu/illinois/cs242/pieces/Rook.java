@@ -1,8 +1,8 @@
+package edu.illinois.cs242.pieces;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class Rook.
- */
+import edu.illinois.cs242.chess.Board;
+import edu.illinois.cs242.chess.Move;
+
 public class Rook extends Piece {
 
 	/**
@@ -12,7 +12,7 @@ public class Rook extends Piece {
 	 */
 	public Rook(int player) {
 		super(player);
-		this.hasMoved = false;
+		pieceImageKey = color == Board.WHITE ? "res/white_rook.png" : "res/black_rook.png";
 	}
 
 	/* (non-Javadoc)

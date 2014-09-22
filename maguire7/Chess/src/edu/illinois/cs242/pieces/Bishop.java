@@ -1,3 +1,8 @@
+package edu.illinois.cs242.pieces;
+import edu.illinois.cs242.chess.Board;
+import edu.illinois.cs242.chess.Move;
+
+
 
 /**
  * The Class Bishop.
@@ -11,6 +16,7 @@ public class Bishop extends Piece {
 	 */
 	public Bishop(int player) {
 		super(player);
+		pieceImageKey = color == Board.WHITE ? "res/white_bishop.png" : "res/black_bishop.png";
 	}
 
 

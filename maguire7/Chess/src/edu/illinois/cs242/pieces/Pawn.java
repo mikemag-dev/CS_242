@@ -1,3 +1,8 @@
+package edu.illinois.cs242.pieces;
+import edu.illinois.cs242.chess.Board;
+
+
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class Pawn.
@@ -5,16 +10,25 @@
 public class Pawn extends Piece {
 	
 	/** The step size. */
-	int stepSize;
+	private int stepSize;
 	
+	public void setStepSize(int stepSize) {
+		this.stepSize = stepSize;
+	}
+
+	public int getStepSize() {
+		return stepSize;
+	}
+
 	/**
 	 * Instantiates a new pawn.
 	 *
 	 * @param player the player
 	 */
-	public Pawn(int player) {
-		super(player);
-		this.stepSize = 2*player;	
+	public Pawn(int color) {
+		super(color);
+		this.stepSize = 2*color;	
+		pieceImageKey = color == Board.WHITE ? "res/white_pawn.png" : "res/black_pawn.png";
 	}
 
 	/**
@@ -32,7 +46,7 @@ public class Pawn extends Piece {
 		if ((0 <= attackbleYCoord && attackbleYCoord < board.height) &&
 			(0 <= attackableXCoord && attackableXCoord < board.width)	){
 			Piece toAttack = board.getPieceAt(attackableXCoord, attackbleYCoord);
-			return null != toAttack && toAttack.player != this.player;
+			return null != toAttack && toAttack.color != this.color;
 		}
 		return false;
 	}

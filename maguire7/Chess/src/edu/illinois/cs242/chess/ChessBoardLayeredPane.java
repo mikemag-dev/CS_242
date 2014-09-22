@@ -1,3 +1,5 @@
+package edu.illinois.cs242.chess;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;

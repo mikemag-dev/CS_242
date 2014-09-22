@@ -1,6 +1,9 @@
+package edu.illinois.cs242.tests;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
+
+import edu.illinois.cs242.pieces.Charger;
 
 
 @RunWith(Suite.class)
