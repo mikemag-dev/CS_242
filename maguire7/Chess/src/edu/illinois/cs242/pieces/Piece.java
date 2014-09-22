@@ -1,3 +1,9 @@
+package edu.illinois.cs242.pieces;
+import edu.illinois.cs242.chess.Board;
+import edu.illinois.cs242.chess.Move;
+
+
+
 
 // TODO: Auto-generated Javadoc
 /**
@@ -5,14 +11,24 @@
  *
  * @author MaguireM
  */
-abstract class Piece {
+public abstract class Piece {
 	
 	/** The has moved. */
 	public boolean hasMoved;
 	
 	/** The player. */
-	public int player;
+	public int color;
 	
+	public String getPieceImageKey() {
+		return pieceImageKey;
+	}
+
+
+	public int getColor() {
+		return color;
+	}
+
+	protected String pieceImageKey;
 	
 	/**
 	 * Instantiates a new piece.
@@ -21,7 +37,7 @@ abstract class Piece {
 	 */
 	public Piece(int player) {
 		super();
-		this.player = player;
+		this.color = player;
 		this.hasMoved = false;
 	}
 

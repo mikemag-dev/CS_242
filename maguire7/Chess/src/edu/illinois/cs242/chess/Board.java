@@ -1,6 +1,16 @@
+package edu.illinois.cs242.chess;
+
 import static java.lang.Math.abs;
 
 import java.util.ArrayList;
+
+import edu.illinois.cs242.pieces.Piece;
+import edu.illinois.cs242.pieces.Bishop;
+import edu.illinois.cs242.pieces.King;
+import edu.illinois.cs242.pieces.Knight;
+import edu.illinois.cs242.pieces.Pawn;
+import edu.illinois.cs242.pieces.Queen;
+import edu.illinois.cs242.pieces.Rook;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -85,7 +95,7 @@ public class Board {
 	public void setPieceAt(int x, int y, Piece piece) {
 		this.grid[x][y].setPiece(piece);
 		if(piece instanceof King){
-			if (piece.player == WHITE){
+			if (piece.color == WHITE){
 				if (whiteKingPos == null){
 					whiteKingPos = new ArrayList<Integer>();
 					whiteKingPos.add(-1);
@@ -119,7 +129,7 @@ public class Board {
 		for(int i = 0; i<this.width; i++){
 			for(int j = 0; j<this.height; j++){
 				Piece pieceAtIdx = this.getPieceAt(i, j);
-				if(null != pieceAtIdx && pieceAtIdx.player != curPlayer && pieceAtIdx.isLegalMove(i, j, kingCoord.get(0), kingCoord.get(1), this)){
+				if(null != pieceAtIdx && pieceAtIdx.color != curPlayer && pieceAtIdx.isLegalMove(i, j, kingCoord.get(0), kingCoord.get(1), this)){
 					return true;
 				}
 			}
@@ -148,7 +158,7 @@ public class Board {
 		pieceAtDest = this.getPieceAt(destX, destY);
 		this.setPieceAt(destX, destY, curPiece);
 
-		curPlayer = curPiece.player;
+		curPlayer = curPiece.color;
 
 		if (inCheck(curPlayer)) {
 			putsSelfInCheck = true;
@@ -185,7 +195,7 @@ public class Board {
 			pieceToMove.hasMoved = true;
 			if (pieceToMove instanceof Pawn) {
 				Pawn pieceAsPawn = (Pawn) pieceToMove;
-				pieceAsPawn.stepSize /= 2;
+				pieceAsPawn.setStepSize(pieceAsPawn.getStepSize()/2);
 			}
 		}
 
@@ -226,7 +236,7 @@ public class Board {
 		for(int i = 0; i<width; i++){
 			for(int j = 0; j<height; j++){
 				Piece curPiece = getPieceAt(i,j);
-				if(curPiece != null && curPiece.player == curPlayer){
+				if(curPiece != null && curPiece.color == curPlayer){
 					for(int m = 0; m<width; m++){
 						for(int n = 0; n<height; n++){
 							if(curPiece.isLegalMove(i, j, m, n, this) && !putsSelfInCheck(i, j, m, n)){
@@ -253,7 +263,7 @@ public class Board {
 		return !hasAtLeastOneMove(curPlayer);
 	}
 
-	boolean isOneSquareAway(int curX, int curY, int destX, int destY) {
+	public boolean isOneSquareAway(int curX, int curY, int destX, int destY) {
 		int distanceX = abs(curX - destX);
 		int distanceY = abs(curY - destY);		
 		if(distanceX * distanceY == 1 || distanceX + distanceY == 1 ){

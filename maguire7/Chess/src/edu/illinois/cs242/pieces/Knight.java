@@ -1,3 +1,9 @@
+package edu.illinois.cs242.pieces;
+import edu.illinois.cs242.chess.Board;
+import edu.illinois.cs242.chess.Move;
+
+
+
 
 // TODO: Auto-generated Javadoc
 /**
@@ -12,6 +18,7 @@ public class Knight extends Piece {
 	 */
 	public Knight(int color) {
 		super(color);
+		pieceImageKey = color == Board.WHITE ? "res/white_knight.png" : "res/black_knight.png";
 	}
 
 	/* (non-Javadoc)

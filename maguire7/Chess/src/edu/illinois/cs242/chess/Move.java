@@ -1,4 +1,7 @@
+package edu.illinois.cs242.chess;
+
 import static java.lang.Math.*;
+import edu.illinois.cs242.pieces.Piece;
 
 
 // TODO: Auto-generated Javadoc
@@ -104,7 +107,7 @@ public class Move {
 		topmostPos = max(curY, destY);
 		
 		//check if destination has a teammate already there
-		if( pieceAtDest!=null && pieceAtDest.player == curPiece.player){
+		if( pieceAtDest!=null && pieceAtDest.color == curPiece.color){
 			return true;
 		}
 		

@@ -1,7 +1,16 @@
+package edu.illinois.cs242.tests;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import edu.illinois.cs242.chess.Board;
+import edu.illinois.cs242.pieces.Bishop;
+import edu.illinois.cs242.pieces.King;
+import edu.illinois.cs242.pieces.Knight;
+import edu.illinois.cs242.pieces.Pawn;
+import edu.illinois.cs242.pieces.Queen;
+import edu.illinois.cs242.pieces.Rook;
 
 
 public class BoardTest {

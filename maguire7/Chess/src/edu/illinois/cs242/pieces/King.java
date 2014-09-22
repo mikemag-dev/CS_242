@@ -1,3 +1,8 @@
+package edu.illinois.cs242.pieces;
+import edu.illinois.cs242.chess.Board;
+
+
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class King.
@@ -9,8 +14,9 @@ public class King extends Piece {
 	 *
 	 * @param player the player
 	 */
-	public King(int player) {
-		super(player);
+	public King(int color) {
+		super(color);
+		pieceImageKey = color == Board.WHITE ? "res/white_king.png" : "res/black_king.png";
 	}
 
 	

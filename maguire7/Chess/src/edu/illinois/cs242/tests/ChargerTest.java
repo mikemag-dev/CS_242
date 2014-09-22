@@ -1,6 +1,11 @@
+package edu.illinois.cs242.tests;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import edu.illinois.cs242.chess.Board;
+import edu.illinois.cs242.pieces.Charger;
+import edu.illinois.cs242.pieces.Pawn;
 
 
 public class ChargerTest {
