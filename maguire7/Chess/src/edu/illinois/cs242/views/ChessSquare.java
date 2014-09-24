@@ -9,26 +9,39 @@ import javax.swing.JButton;
 
 public class ChessSquare extends JButton {
 	private int x, y;
+	private boolean isSelected;
 	
 	
-	public ChessSquare(int i, String pieceImageKey) {
-		if(i == 0) setBackground(Color.DARK_GRAY);
+	public boolean isSelected() {
+		return isSelected;
+	}
+
+	public void setSelected(boolean isSelected) {
+		this.isSelected = isSelected;
+	}
+
+	public ChessSquare(int x, int y, String pieceImageKey) {
+		if((x+y)%2 == 0) setBackground(Color.DARK_GRAY);
 		else setBackground(Color.LIGHT_GRAY);
 		setOpaque(true);
+		this.x = x;
+		this.y = y;
+		this.isSelected = false;
 		setPieceImage(pieceImageKey);
-		initButtonListener();
+		this.addActionListener(new ActionListener(){
+			public void action
+		});
 	}
 
 	public void setPieceImage(String pieceImageKey) {
 		if(pieceImageKey != null) this.setIcon(new ImageIcon(pieceImageKey));
 	}
 
-	private void initButtonListener() {
-		this.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
 	}
 }

@@ -27,7 +27,7 @@ public class ChessActivity extends JFrame{
 	
 	public static void main(String[] args){
 		ChessActivity chess = new ChessActivity();
-		ChessBoard chessboardUI = new ChessBoard(chess.board);
+		ChessBoardPanel chessboardUI = new ChessBoardPanel(chess.board);
 		chessboardUI.setVisible(true);
 		
 		while(true){
