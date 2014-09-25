@@ -7,7 +7,7 @@ import edu.illinois.cs242.chess.Board;
 /**
  * The Class King.
  */
-public class King extends Piece {
+public class King extends ChessPiece {
 
 	/**
 	 * Instantiates a new king.
@@ -17,6 +17,10 @@ public class King extends Piece {
 	public King(int color) {
 		super(color);
 		pieceImageKey = color == Board.WHITE ? "res/white_king.png" : "res/black_king.png";
+	}
+	
+	public King(King king) {
+		super(king);
 	}
 
 	

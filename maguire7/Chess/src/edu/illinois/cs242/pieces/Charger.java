@@ -10,10 +10,14 @@ import edu.illinois.cs242.chess.Move;
  * if need be.
  * 
  */
-public class Charger extends Piece {
+public class Charger extends ChessPiece {
 
 	public Charger(int color) {
 		super(color);
+	}
+	
+	public Charger(Charger charger) {
+		super(charger);
 	}
 
 	/* (non-Javadoc)
@@ -33,7 +37,7 @@ public class Charger extends Piece {
 			return false;
 		}	
 		
-		int color = ((Piece) board.getPieceAt(curX, curY)).color;
+		int color = ((ChessPiece) board.getPieceAt(curX, curY)).color;
 		int minDestYDist = Math.min(1*color, 3*color);
 		int maxDestYDist = Math.max(1*color, 3*color);
 		int destYDist = destY - curY;

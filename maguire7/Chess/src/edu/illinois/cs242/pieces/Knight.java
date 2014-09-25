@@ -9,7 +9,7 @@ import edu.illinois.cs242.chess.Move;
 /**
  * The Class Knight.
  */
-public class Knight extends Piece {
+public class Knight extends ChessPiece {
 
 	/**
 	 * Instantiates a new knight.
@@ -21,6 +21,10 @@ public class Knight extends Piece {
 		pieceImageKey = color == Board.WHITE ? "res/white_knight.png" : "res/black_knight.png";
 	}
 
+	public Knight(Knight knight) {
+		super(knight);
+	}
+	
 	/* (non-Javadoc)
 	 * @see Piece#isLegalMove(int, int, int, int, Board)
 	 */

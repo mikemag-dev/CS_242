@@ -3,7 +3,7 @@ package edu.illinois.cs242.pieces;
 import edu.illinois.cs242.chess.Board;
 import edu.illinois.cs242.chess.Move;
 
-public class Rook extends Piece {
+public class Rook extends ChessPiece {
 
 	/**
 	 * Instantiates a new rook.
@@ -15,6 +15,10 @@ public class Rook extends Piece {
 		pieceImageKey = color == Board.WHITE ? "res/white_rook.png" : "res/black_rook.png";
 	}
 
+	public Rook(Rook rook) {
+		super(rook);
+	}
+	
 	/* (non-Javadoc)
 	 * @see Piece#isLegalMove(int, int, int, int, Board)
 	 */
