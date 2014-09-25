@@ -11,7 +11,7 @@ import edu.illinois.cs242.chess.Move;
  *
  * @author MaguireM
  */
-public abstract class Piece {
+public abstract class ChessPiece {
 	
 	/** The has moved. */
 	public boolean hasMoved;
@@ -35,12 +35,18 @@ public abstract class Piece {
 	 *
 	 * @param player -1 if player is black, 1 is player is white
 	 */
-	public Piece(int player) {
+	public ChessPiece(int player) {
 		super();
 		this.color = player;
 		this.hasMoved = false;
 	}
-
+	
+	public ChessPiece(ChessPiece chessPiece) {
+		super();
+		this.color = chessPiece.color;
+		this.hasMoved = chessPiece.hasMoved;
+		this.pieceImageKey = chessPiece.getPieceImageKey();
+	}
 
 	/**
 	 * Checks if is legal move relative to piece-specific constraints and obstructions on the board.

@@ -4,7 +4,7 @@ import static java.lang.Math.abs;
 
 import java.util.ArrayList;
 
-import edu.illinois.cs242.pieces.Piece;
+import edu.illinois.cs242.pieces.ChessPiece;
 import edu.illinois.cs242.pieces.Bishop;
 import edu.illinois.cs242.pieces.King;
 import edu.illinois.cs242.pieces.Knight;
@@ -81,7 +81,7 @@ public class Board {
 	 * @param y the y coordinate
 	 * @return the piece at given coordinates, null if no piece
 	 */
-	public Piece getPieceAt(int x, int y) {
+	public ChessPiece getPieceAt(int x, int y) {
 		return this.grid[x][y].getPiece();
 	}
 
@@ -92,7 +92,7 @@ public class Board {
 	 * @param y the y coordinate
 	 * @param piece the piece to set at given coordinates
 	 */
-	public void setPieceAt(int x, int y, Piece piece) {
+	public void setPieceAt(int x, int y, ChessPiece piece) {
 		this.grid[x][y].setPiece(piece);
 		if(piece instanceof King){
 			if (piece.color == WHITE){
@@ -128,7 +128,7 @@ public class Board {
 		if(kingCoord == null) return false;
 		for(int i = 0; i<this.width; i++){
 			for(int j = 0; j<this.height; j++){
-				Piece pieceAtIdx = this.getPieceAt(i, j);
+				ChessPiece pieceAtIdx = this.getPieceAt(i, j);
 				if(null != pieceAtIdx && pieceAtIdx.color != curPlayer && pieceAtIdx.isLegalMove(i, j, kingCoord.get(0), kingCoord.get(1), this)){
 					return true;
 				}
@@ -150,7 +150,7 @@ public class Board {
 			int destY) {
 		boolean putsSelfInCheck = false;
 		int curPlayer;
-		Piece curPiece, pieceAtDest;
+		ChessPiece curPiece, pieceAtDest;
 
 		// move piece temporarily
 		curPiece = this.getPieceAt(curX, curY);
@@ -181,12 +181,10 @@ public class Board {
 	public boolean tryMove(int curX, int curY, int destX, int destY) {
 
 		
-		Piece pieceToMove = getPieceAt(curX, curY);
+		ChessPiece pieceToMove = getPieceAt(curX, curY);
 
-		if ((!pieceToMove.isLegalMove(curX, curY, destX, destY, this)) ||
-			(putsSelfInCheck(curX, curY, destY, destY))) {
+		if (!canMove(curX, curY, destX, destY))
 			return false;
-		}
 
 		this.grid[curX][curY].setPiece(null);
 		this.grid[destX][destY].setPiece(pieceToMove);
@@ -201,6 +199,19 @@ public class Board {
 
 		return true;
 	}
+
+	public boolean canMove(int curX, int curY, int destX, int destY) {
+		
+		ChessPiece pieceToMove = getPieceAt(curX, curY);
+
+		if ((!pieceToMove.isLegalMove(curX, curY, destX, destY, this)) ||
+			(putsSelfInCheck(curX, curY, destX, destY))) {
+			return false;
+		}
+		return true;
+	}
+
+
 
 	/**
 	 * Whether or not current player is in checkmate.
@@ -235,7 +246,7 @@ public class Board {
 	private boolean hasAtLeastOneMove(int curPlayer) {
 		for(int i = 0; i<width; i++){
 			for(int j = 0; j<height; j++){
-				Piece curPiece = getPieceAt(i,j);
+				ChessPiece curPiece = getPieceAt(i,j);
 				if(curPiece != null && curPiece.color == curPlayer){
 					for(int m = 0; m<width; m++){
 						for(int n = 0; n<height; n++){

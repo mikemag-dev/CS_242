@@ -1,7 +1,7 @@
 package edu.illinois.cs242.chess;
 
 import static java.lang.Math.*;
-import edu.illinois.cs242.pieces.Piece;
+import edu.illinois.cs242.pieces.ChessPiece;
 
 
 // TODO: Auto-generated Javadoc
@@ -97,8 +97,8 @@ public class Move {
 	 * @return true, if is obstructed
 	 */
 	public static boolean isObstructed(int curX, int curY, int destX, int destY, Board board){
-		Piece curPiece = board.getPieceAt(curX, curY);
-		Piece pieceAtDest = board.getPieceAt(destX, destY);
+		ChessPiece curPiece = board.getPieceAt(curX, curY);
+		ChessPiece pieceAtDest = board.getPieceAt(destX, destY);
 
 		int leftmostPos, rightmostPos, topmostPos, bottommostPos;
 		leftmostPos = min(curX, destX);
@@ -114,7 +114,7 @@ public class Move {
 		if(isDiagonal(curX, curY, destX, destY)){
 			int slopeSign = (int) Math.signum((destY - curY)/(destX - curX));
 			for(int i = 1; i<rightmostPos - leftmostPos; i++){
-				Piece pieceBetweenDest = board.getPieceAt(leftmostPos + i, curX == leftmostPos ? curY + i*slopeSign : destY + i*slopeSign);
+				ChessPiece pieceBetweenDest = board.getPieceAt(leftmostPos + i, curX == leftmostPos ? curY + i*slopeSign : destY + i*slopeSign);
 				if(pieceBetweenDest != null){
 					return true;
 				}
@@ -124,7 +124,7 @@ public class Move {
 			//is horizontal move
 			if(curX != destX){
 				for(int i = leftmostPos+1; i<rightmostPos; i++){
-					Piece pieceBetweenDest = board.getPieceAt(i, curY);
+					ChessPiece pieceBetweenDest = board.getPieceAt(i, curY);
 					if(pieceBetweenDest != null){
 						return true;
 					}
@@ -133,7 +133,7 @@ public class Move {
 			//is vertical move
 			else if(curY != destY){
 				for(int i = bottommostPos+1; i<topmostPos; i++){
-					Piece pieceBetweenDest = board.getPieceAt(curX, i);
+					ChessPiece pieceBetweenDest = board.getPieceAt(curX, i);
 					if(pieceBetweenDest != null){
 						return true;
 					}

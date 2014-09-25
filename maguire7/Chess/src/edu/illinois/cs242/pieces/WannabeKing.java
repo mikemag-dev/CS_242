@@ -2,10 +2,14 @@ package edu.illinois.cs242.pieces;
 
 import edu.illinois.cs242.chess.Board;
 
-public class WannabeKing extends Piece {
+public class WannabeKing extends ChessPiece {
 
 	public WannabeKing(int color) {
 		super(color);
+	}
+	
+	public WannabeKing(WannabeKing wannabeKing) {
+		super(wannabeKing);
 	}
 
 	@Override

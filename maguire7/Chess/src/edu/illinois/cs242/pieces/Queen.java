@@ -6,7 +6,7 @@ import edu.illinois.cs242.chess.Move;
 /**
  * The Class Queen.
  */
-public class Queen extends Piece {
+public class Queen extends ChessPiece {
 	
 	
 
@@ -18,6 +18,10 @@ public class Queen extends Piece {
 	public Queen(int color) {
 		super(color);
 		pieceImageKey = color == Board.WHITE ? "res/white_queen.png" : "res/black_queen.png";
+	}
+	
+	public Queen(Queen queen) {
+		super(queen);
 	}
 
 	/* (non-Javadoc)

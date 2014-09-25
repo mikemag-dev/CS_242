@@ -7,7 +7,7 @@ import edu.illinois.cs242.chess.Board;
 /**
  * The Class Pawn.
  */
-public class Pawn extends Piece {
+public class Pawn extends ChessPiece {
 	
 	/** The step size. */
 	private int stepSize;
@@ -30,6 +30,11 @@ public class Pawn extends Piece {
 		this.stepSize = 2*color;	
 		pieceImageKey = color == Board.WHITE ? "res/white_pawn.png" : "res/black_pawn.png";
 	}
+	
+	public Pawn(Pawn pawn) {
+		super(pawn);
+		this.stepSize = pawn.stepSize;
+	}
 
 	/**
 	 * Can attack.
@@ -45,7 +50,7 @@ public class Pawn extends Piece {
 		int attackableXCoord = curX + direction;
 		if ((0 <= attackbleYCoord && attackbleYCoord < board.height) &&
 			(0 <= attackableXCoord && attackableXCoord < board.width)	){
-			Piece toAttack = board.getPieceAt(attackableXCoord, attackbleYCoord);
+			ChessPiece toAttack = board.getPieceAt(attackableXCoord, attackbleYCoord);
 			return null != toAttack && toAttack.color != this.color;
 		}
 		return false;

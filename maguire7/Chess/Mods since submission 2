@@ -1,1 +1,2 @@
 1. moved classes out of default packages
+2. copy costructors for pieces, esp for undo stack

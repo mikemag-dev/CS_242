@@ -7,7 +7,7 @@ import edu.illinois.cs242.chess.Move;
 /**
  * The Class Bishop.
  */
-public class Bishop extends Piece {
+public class Bishop extends ChessPiece {
 
 	/**
 	 * Instantiates a new bishop.
@@ -18,8 +18,12 @@ public class Bishop extends Piece {
 		super(player);
 		pieceImageKey = color == Board.WHITE ? "res/white_bishop.png" : "res/black_bishop.png";
 	}
+	
+	public Bishop(Bishop bishop) {
+		super(bishop);
+	}
 
-
+	
 	/* (non-Javadoc)
 	 * @see Piece#isLegalMove(int, int, int, int, Board)
 	 */

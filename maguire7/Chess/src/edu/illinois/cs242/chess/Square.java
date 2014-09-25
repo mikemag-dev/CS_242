@@ -1,6 +1,6 @@
 package edu.illinois.cs242.chess;
 
-import edu.illinois.cs242.pieces.Piece;
+import edu.illinois.cs242.pieces.ChessPiece;
 
 
 // TODO: Auto-generated Javadoc
@@ -13,7 +13,7 @@ public class Square {
 	private boolean playable;
 	
 	/** The piece. */
-	private Piece piece;
+	private ChessPiece piece;
 	
 	/**
 	 * Instantiates a new square.
@@ -30,7 +30,7 @@ public class Square {
 	 *
 	 * @return the piece
 	 */
-	public Piece getPiece() {
+	public ChessPiece getPiece() {
 		return piece;
 	}
 
@@ -39,7 +39,7 @@ public class Square {
 	 *
 	 * @param piece the new piece
 	 */
-	public void setPiece(Piece piece) {
+	public void setPiece(ChessPiece piece) {
 		this.piece = piece;
 	}
 
